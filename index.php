@@ -21,6 +21,10 @@
                 <input type="email" name="email" class="form-control custom-input" placeholder="name@example.com" required>
             </div>
             <div class="mb-3">
+                <label class="form-label">Nickname</label>
+                <input type="text" name="nickname" class="form-control custom-input" placeholder="robofico" required>
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Heslo</label>
                 <input type="password" name="password" class="form-control custom-input" placeholder="••••••••" required>
             </div>
@@ -30,10 +34,12 @@
         </form>
         
         <div class="text-center mt-3">
-            <small>Nemáte účet? <a href="#" class="text-decoration-none">Registrovať sa</a></small>
+            <small>Nemáte účet? <a href="register.php" class="text-decoration-none">Registrovať sa</a></small>
         </div>
     </div>
 
 </body>
 </html>
+
+
 
