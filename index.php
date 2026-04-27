@@ -1,5 +1,48 @@
+<?php
+session_start();
+require_once 'db.php'; 
+
+$error = "";
+$success = "";
+
+if (isset($_GET['status']) && $_GET['status'] == 'success') {
+    $success = "Registrácia úspešná! Teraz sa môžeš prihlásiť.";
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+    $email = trim($_POST['email']);
+    $nickname = trim($_POST['nickname']);
+    $password = $_POST['password'];
+
+    if (empty($email) || empty($nickname) || empty($password)) {
+        $error = "Vyplňte všetky polia.";
+    } else {
+        $sql = "SELECT user_ID, nickname, password FROM users WHERE email = ? AND nickname = ? LIMIT 1";
+        $stmt = mysqli_prepare($pripojenie, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $email, $nickname);
+        mysqli_stmt_execute($stmt);
+        $vysledok = mysqli_stmt_get_result($stmt);
+
+        if ($user = mysqli_fetch_assoc($vysledok)) {
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['user_ID'];
+                $_SESSION['nickname'] = $user['nickname'];
+                
+                header("Location: home.php");
+                exit;
+            } else {
+                $error = "Nesprávne heslo.";
+            }
+        } else {
+            $error = "Používateľ s týmito údajmi neexistuje.";
+        }
+        mysqli_stmt_close($stmt);
+    }
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +58,15 @@
             <p class="text-muted">Pre pozeranie statov sa prihláste.</p>
         </div>
 
-        <form action="login.php" method="POST">
+        <?php if ($error): ?>
+            <div class="alert alert-danger py-2"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <?php if ($success): ?>
+            <div class="alert alert-success py-2"><?php echo $success; ?></div>
+        <?php endif; ?>
+
+        <form action="index.php" method="POST">
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" name="email" class="form-control custom-input" placeholder="name@example.com" required>
@@ -40,4 +91,3 @@
 
 </body>
 </html>
-
