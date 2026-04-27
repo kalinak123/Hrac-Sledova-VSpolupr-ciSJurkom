@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: localhost:3306
--- Čas generovania: Po 27.Apr 2026, 14:52
+-- Čas generovania: Po 27.Apr 2026, 19:23
 -- Verzia serveru: 5.7.24
 -- Verzia PHP: 8.3.1
 
@@ -36,6 +36,14 @@ CREATE TABLE `player_stats` (
   `headshots` int(11) NOT NULL COMMENT 'headshot percentage'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Sťahujem dáta pre tabuľku `player_stats`
+--
+
+INSERT INTO `player_stats` (`stat_id`, `user_id`, `kills`, `deaths`, `wins`, `headshots`) VALUES
+(1, 5, 6, 7, 2, 3),
+(2, 2, 25, 10, 5, 10);
+
 -- --------------------------------------------------------
 
 --
@@ -57,7 +65,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_ID`, `nickname`, `email`, `password`, `role`, `balance`, `created_at`) VALUES
-(1, 'jozojozo', 'jozo@jozo.com', '$2y$10$X8Nl3psBwR8AJu5qh1MYZeDTIqTZubmczPltpRhP4oUuZXshoPu/W', 0, 1000, '2026-04-27 14:41:48');
+(2, 'Jozef_Jozik', 'jozef@gmail.com', '$2y$10$AA4ki7NTUTndo9McPaanT.gRMXQWXBwJMtCkfA.8hDGeClB7.2Zx.', 0, 1000, '2026-04-27 18:32:51'),
+(5, 'JurMich', 'jm@jm.jm', '$2y$10$z4Nz2i/gX4.pxuEIXoPJFO2EZcoArDXFrHqiDaqVtiXYCRR/M3TIq', 1, 1000, '2026-04-27 18:49:25');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -83,13 +92,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pre tabuľku `player_stats`
 --
 ALTER TABLE `player_stats`
-  MODIFY `stat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pre tabuľku `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
